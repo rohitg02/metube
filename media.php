@@ -36,6 +36,9 @@ if(isset($_GET['id'])) {
 ?>
 	<!-- <p>Viewing Video:<?php echo $result_row[2].$result_row[1];?></p> -->
 	<p>Viewing Video:<?php echo $result_row[4];?></p>
+
+<!-- This is our logout button -->
+<a href='logout.php'  style="color:#000000;">Log Out</a>
 	      
     <object id="MediaPlayer" width=320 height=286 classid="CLSID:22D6f312-B0F6-11D0-94AB-0080C74C7E95" standby="Loading Windows Media Player components…" type="application/x-oleobject" codebase="http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,4,7,1112">
 
@@ -46,7 +49,41 @@ if(isset($_GET['id'])) {
 <param name="Showcontrols" value="True">
 <param name="autoStart" value="True">
 
-<embed type="application/x-mplayer2" src="<?php echo $filepath;  ?>" name="MediaPlayer" width=320 height=240></embed>
+<!---<embed type="application/x-mplayer2" src="<?php echo $filepath;  ?>" name="MediaPlayer" width=320 height=240></embed>--->
+
+<div style="text-align:center"> 
+<video id="video1" width="384" height="288" autoplay>
+	<source src="<?php echo $filepath;  ?>" type="video/mp4">
+</video>
+  <br>
+  <button onclick="playPause()">Play/Pause</button> 
+  <button onclick="makeBig()">Big</button>
+  <button onclick="makeSmall()">Small</button>
+  <button onclick="makeNormal()">Normal</button>
+</div> 
+
+<script> 
+var myVideo = document.getElementById("video1"); 
+
+function playPause() { 
+    if (myVideo.paused) 
+        myVideo.play(); 
+    else 
+        myVideo.pause(); 
+} 
+
+function makeBig() { 
+    myVideo.width = 560; 
+} 
+
+function makeSmall() { 
+    myVideo.width = 320; 
+} 
+
+function makeNormal() { 
+    myVideo.width = 420; 
+} 
+</script>
 
 </object>
               
