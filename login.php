@@ -22,9 +22,6 @@ if(isset($_POST['submit'])) {
 			}		
 		}
 }
-
-
- 
 ?>
 	<form method="post" action="<?php echo "login.php"; ?>">
 

@@ -2,7 +2,6 @@
 <?php
 	session_start();
 	include_once "function.php";
-	include("dbconnect.php");
 ?>	
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -11,6 +10,8 @@
 <script src="Scripts/AC_ActiveX.js" type="text/javascript"></script>
 <script src="Scripts/AC_RunActiveContent.js" type="text/javascript"></script>
 </head>
+
+<a href="browse.php"><img src="http://i.imgur.com/3Qyvyb7.png" alt="MeTube Icon" style="width:160;height:96"></a>
 
 <body>
 <?php
@@ -28,7 +29,7 @@ if(isset($_GET['id'])) {
 	{
 		echo "Viewing Picture:";
 		echo $result_row[4];
-		echo "<img src='".$filepath."'/>";
+		echo '<img src="'.$filepath.'"/>';
 	}
 	else //view movie
 	{	

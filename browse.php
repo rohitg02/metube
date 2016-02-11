@@ -24,20 +24,24 @@ function saveDownload(id){
 
 <!-- This is the top line -->
 <body>
-<p>Welcome <?php echo $_SESSION['username'];?></p>
-<hr>
+<p style="text-align:left;">
+<a href="browse.php"><img src="http://i.imgur.com/3Qyvyb7.png" alt="MeTube Icon" style="width:160;height:96"></a><span style="float:right;">
+Welcome <?php echo $_SESSION['username'];?></span></p>
 
+
+
+<hr>
 <!-- This is our search bar -->
-<p>Search</p>
+<p><strong> Search Here </strong></p>
 	<form name="form1" method="post" action="searchresults.php">
 		<input name="search" type="text" size="40" maxlength="50"/>
 		<input type="submit" name="Submit" value="Search"/><br><hr>
 
 <!-- This is our logout button -->
-<a href='logout.php'  style="color:#FF9900;">Log Out</a>
+<a href='logout.php'  style="color:#000000;">Log Out</a>
 	
 <!-- This is our upload media button -->
-<a href='media_upload.php'  style="color:#FF9900;">Upload File</a>
+<a href='media_upload.php'  style="color:#000000;">Upload File</a>
 <div id='upload_result'>
 <?php 
 	if(isset($_REQUEST['result']) && $_REQUEST['result']!=0){		
