@@ -2,6 +2,7 @@
 <?php
 	session_start();
 	include_once "function.php";
+	include("dbconnect.php");
 ?>	
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -47,11 +48,6 @@ if(isset($_GET['id'])) {
 <embed type="application/x-mplayer2" src="<?php echo $filepath;  ?>" name="MediaPlayer" width=320 height=240></embed>
 
 </object>
-
-          
-          
-          
-       
               
 <?php
 	}
