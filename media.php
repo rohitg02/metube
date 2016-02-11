@@ -52,10 +52,12 @@ if(isset($_GET['id'])) {
 <!---<embed type="application/x-mplayer2" src="<?php echo $filepath;  ?>" name="MediaPlayer" width=320 height=240></embed>--->
 
 <div style="text-align:center"> 
-<video id="video1" width="384" height="288" autoplay>
-	<source src="<?php echo $filepath;  ?>" type="video/mp4">
+<video id="video1" width="384" height="288" controls>
+	<source src="<?php echo $filepath; ?>" type="video/mp4">
+	<source src="<?php echo $filepath; ?>" type="video/webm">
+	<source src="<?php echo $filepath; ?>" type="video/ogg">
 </video>
-  <br>
+  <br><br><br>
   <button onclick="playPause()">Play/Pause</button> 
   <button onclick="makeBig()">Big</button>
   <button onclick="makeSmall()">Small</button>
@@ -65,11 +67,15 @@ if(isset($_GET['id'])) {
 <script> 
 var myVideo = document.getElementById("video1"); 
 
+myVideo.onseeking = function(){};
+
 function playPause() { 
-    if (myVideo.paused) 
+    if (myVideo.paused){
         myVideo.play(); 
-    else 
+	}
+    else{
         myVideo.pause(); 
+	}
 } 
 
 function makeBig() { 
