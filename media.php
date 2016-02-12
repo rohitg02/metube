@@ -58,7 +58,7 @@ if(isset($_GET['id'])) {
 	<source src="<?php echo $filepath; ?>" type="video/ogg">
 </video>
   <br><br><br>
-  <button onclick="playPause()">Play/Pause</button> 
+  <!--<button onclick="playPause()">Play/Pause</button>-->
   <button onclick="makeBig()">Big</button>
   <button onclick="makeSmall()">Small</button>
   <button onclick="makeNormal()">Normal</button>
@@ -69,14 +69,14 @@ var myVideo = document.getElementById("video1");
 
 myVideo.onseeking = function(){};
 
-function playPause() { 
+/*function playPause() { 
     if (myVideo.paused){
         myVideo.play(); 
 	}
     else{
         myVideo.pause(); 
 	}
-} 
+}*/
 
 function makeBig() { 
     myVideo.width = 560; 
