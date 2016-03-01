@@ -42,7 +42,7 @@ if(isset($_GET['id'])) {
 ?>
 	<!-- <p>Viewing Video:<?php echo $result_row[2].$result_row[1];?></p> -->
 <?php
-	echo "Viewing Video:";
+	echo "Viewing Video":
 	echo $result_row[4];
 ?>
 	      
