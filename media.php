@@ -21,6 +21,7 @@
 <body>
 <?php
 if(isset($_GET['id'])) {
+	$id= $_GET['id'];
 	$query = "SELECT * FROM media WHERE mediaid='".$_GET['id']."'";
 	$result = mysql_query( $query );
 	$result_row = mysql_fetch_row($result);
@@ -103,9 +104,60 @@ function makeNormal() {
 else
 {
 ?>
+
 <meta http-equiv="refresh" content="0;url=browse.php">
 <?php
 }
 ?>
+
+
+
+<div style="background:#1766b5;color:#ffffff; width:132px;">Comments</div>
+<?php
+
+//Selecting comments table
+
+        $querycomments = "SELECT * from comments WHERE mediaid=$id"; 
+        $resultcomments = mysql_query( $querycomments );
+        if (!$resultcomments){
+           die ("Could not query the media table in the database: <br />". mysql_error());
+        }
+?>
+
+
+                <?php
+            //commentId,username, mediaid, commentstext
+                        while ($resultcomments_row = mysql_fetch_row($resultcomments)){ 
+                                $commentId= $resultcomments_row[0];
+                                $username= $resultcomments_row[1];
+                                $mediaid= $resultcomments_row[2];
+				$commentstext= $resultcomments_row[3];
+	   // Printing Username and Comments
+				echo "Username:<br/>"; 
+				echo	$username;
+			        
+				echo $commentstext."<br/>"; 
+                }
+?>
+
+		<p><strong> Comment Box</strong></p>
+        <form name="form1" method="post" action="media.php"+ $id>
+                <input name="comment" type="textarea" size="250" maxlength="50" required/>
+				<input type="submit" name="submitcomment" value="Submit Query"/><br><hr>
+        </form>
+
+	 <?php
+             	$commentval = $_POST['comment'];
+                if(isset($_POST['submitcomment'])) {
+		 $querycomment = "insert into comments values (NULL,'$username','$id','$commentval')";
+		$insertcomment = mysql_query($querycomment);
+		if($insertcomment)
+		echo "Inserted";
+		else
+		die("Could not insertinto the database".mysql_error());
+		}
+         ?>
+
+
 </body>
 </html>

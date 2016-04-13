@@ -5,5 +5,5 @@ if (!$con)
   die('Could not connect: ' . mysql_error());
   }
 
-mysql_select_db("abader4620", $con);
+mysql_select_db("Project4620", $con);
 ?>

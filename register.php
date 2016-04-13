@@ -25,6 +25,10 @@
 		<form action="register.php" method="post">
 			<div style="width:400px;">
 				Username: <input type="text" name="username" style> <br>
+				Name: <input type="text" name="name" style> <br>
+				Phone No: <input type="text" name="pnumber" style> <br>
+				Gender: <input type="text" name="gender" style> <br>
+				Birthdate: <input type="text" name="birthdate" style> <br>
 				Create Password: <input  type="password" name="passowrd1"> <br>
 				Repeat Password: <input type="password" name="passowrd2"> <br>
 				<input name="submit" type="submit" value="Submit">

@@ -34,9 +34,9 @@ Welcome <?php echo $_SESSION['username'];?></span></p>
 <!-- This is our search bar -->
 <p><strong> Search Here </strong></p>
 	<form name="form1" method="post" action="searchresults.php">
-		<input name="search" type="text" size="40" maxlength="50"/>
+		<input name="search" type="text" size="40" maxlength="50" required/>
 		<input type="submit" name="Submit" value="Search"/><br><hr>
-
+	</form>
 <!-- This is our logout button -->
 <a href='logout.php'  style="color:#000000;">Log Out</a>
 	
@@ -77,8 +77,13 @@ Welcome <?php echo $_SESSION['username'];?></span></p>
 						echo $mediaid;  //mediaid
 					?>
 			</td>
-                        <td>
-            	            <a href="media.php?id=<?php echo $mediaid;?>" target="_blank"><?php echo $filename;?></a> 
+                        
+
+			<td>
+			<?php	$link="media.php?id="; ?>
+            	            <a href="media.php?id=<?php echo $mediaid;?>" target="_blank" ><?php echo $filename;?></a> 
+				
+ 
                         </td>
                         <td>
             	            <a href="<?php echo $filenpath;?>" target="_blank" onclick="javascript:saveDownload(<?php echo $result_row[4];?>);">Download</a>
@@ -88,6 +93,8 @@ Welcome <?php echo $_SESSION['username'];?></span></p>
 			}
 		?>
 	</table>
+
    </div>
+
 </body>
 </html>
