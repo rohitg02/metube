@@ -2,7 +2,7 @@
 include "mysqlClass.inc.php";
 
 
-function user_exist_check ($username, $password){
+function user_exist_check ($username, $password,$name,$phonenum,$gender,$birthdate){
 	$query = "select * from account where username='$username'";
 	$result = mysql_query( $query );
 	if (!$result){
@@ -11,8 +11,7 @@ function user_exist_check ($username, $password){
 	else {
 		$row = mysql_fetch_assoc($result);
 		if($row == 0){
-			$query = "insert into account values ('$username','$password')";
-			echo "insert query:" . $query;
+			$query = "insert into account values ('$username','$password','$name','$phonenum','$gender','$birthdate')";
 			$insert = mysql_query( $query );
 			if($insert)
 				return 1;
@@ -28,7 +27,6 @@ function user_exist_check ($username, $password){
 
 function user_pass_check($username, $password){
 	$query = "select * from account where username='$username'";
-	echo  $query;
 	$result = mysql_query( $query );
 		
 	if (!$result)

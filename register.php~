@@ -1,0 +1,109 @@
+<title>Register</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/datepicker.css" rel="stylesheet">
+<link href="css/bootstrap.css" rel="stylesheet">
+<link href="css/buttons.css" rel="stylesheet">
+
+<html>
+  <body class="bg-info">
+    <?php
+      session_start();
+      include_once "function.php";
+
+      if(isset($_POST['submit'])) {
+    	if( $_POST['passowrd1'] != $_POST['passowrd2']) {
+	  $register_error = " Passwords do not match. Try again.";
+	}
+	else {
+	  $check = user_exist_check($_POST['username'], $_POST['password1'],$_POST['name'],$_POST['pnumber'],$_POST['gender'],$_POST['birthdate']);	
+	  if($check == 1){
+	    //echo "Register succeeds";
+            $_SESSION['username']=$_POST['username'];
+	    header('Location: browse.php');
+	  }
+	  else if($check == 2){
+	    $register_error = " Username already exists. Please choose a different username.";
+	  }
+	}
+      }
+    ?>
+
+<form action="register.php" method="post">
+  <fieldset style="border-color: red;">
+    <legend>Register</legend>
+    <div class="form-group">
+      <label for="username" class="col-lg-2 control-label">Username</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="username" placeholder="Username" name="username">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="name" class="col-lg-2 control-label">Name</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="name" placeholder="Name" name="name">
+      </div>
+    </div>
+	<!--Phone No: <input type="text" name="pnumber" style> <br>-->
+    <div class="form-group">
+      <label for="pnumber" class="col-lg-2 control-label">Phone Number</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="pnumber" placeholder="Phone Number" name="pnumber">
+      </div>
+    </div>
+	<!--Gender: <input type="text" name="gender" style> <br>-->
+    <div class="form-group">
+      <label class="col-lg-2 control-label">Gender</label>
+      <div class="col-lg-10">
+        <div class="radio">
+          <label>
+            <input type="radio" name="gender" id="optionsRadios1" value="option1">
+            Female
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="gender" id="optionsRadios2" value="option2">
+            Male
+          </label>
+        </div>
+      </div>
+    </div>
+	<!--Birthdate: <input type="text" name="birthdate" style> <br>-->
+    <div class="form-group">
+      <label for="birthdate" class="col-lg-2 control-label">Birthdate</label>
+      <div class="col-lg-10">
+	    <input type="text" value="02/16/12" data-date-format="mm/dd/yy" id="inputBirthdate" name="birthdate" >
+        <!--<input type="text" class="form-control" id="inputBirthdate" placeholder="Birth Date" name="birthdate">-->
+      </div>
+    </div>
+	<!--Create Password: <input  type="password" name="passowrd1"> <br>-->
+    <div class="form-group">
+      <label for="password1" class="col-lg-2 control-label">Password</label>
+      <div class="col-lg-10">
+        <input type="password" class="form-control" id="password1" placeholder="Password" name="password1">
+      </div>
+    </div>
+	<!--Repeat Password: <input type="password" name="passowrd2"> <br>-->
+    <div class="form-group">
+      <label for="password2" class="col-lg-2 control-label">Repeat Password</label>
+      <div class="col-lg-10">
+        <input type="password" class="form-control" id="password2" placeholder="Repeat Password" name="password2">
+      </div>
+    </div>
+	<!--<input name="submit" type="submit" value="Submit">-->
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+        <!--<button type="reset" class="btn btn-primary" onclick="window.location='index.php'" name="cencel">Cancel</button>-->
+        <button type="submit" class="btn btn-primary"onclick="window.location='index.php'" name="submit">Submit</button>
+      </div>
+    </div>
+  </fieldset>
+</form>
+
+    <?php
+      if(isset($register_error)){
+        echo "<div id='passwd_result'> register_error:".$register_error."</div>";}
+    ?>
+  </body>
+</html>

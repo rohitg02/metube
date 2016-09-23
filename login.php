@@ -1,4 +1,6 @@
-<link rel="stylesheet" type="text/css" href="css/default.css" />
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<title>Login</title>
+		<body class="bg-info">
 <?php
 session_start();
 
@@ -24,21 +26,13 @@ if(isset($_POST['submit'])) {
 }
 ?>
 	<form method="post" action="<?php echo "login.php"; ?>">
-
-	<table width="100%">
-		<tr>
-			<td  width="20%">Username:</td>
-			<td width="80%"><input class="text"  type="text" name="username"><br /></td>
-		</tr>
-		<tr>
-			<td  width="20%">Password:</td>
-			<td width="80%"><input class="text"  type="password" name="password"><br /></td>
-		</tr>
-		<tr>
-        
-			<td><input name="submit" type="submit" value="Login"><input name="reset" type="reset" value="Reset"><br /></td>
-		</tr>
-	</table>
+		<br><br><br><br><br><br><br><br><br><br><br><br>
+		<center><form action="login.php" method="post">
+			Username: <input class="text"  type="text" name="username"><br>
+			Password : <input class="text"  type="password" name="password"><br>
+			<input name="submit" type="submit" value="Login" class="btn btn-primary" tabindex="1000">
+			<input name="reset" type="reset" value="Reset" class="btn btn-primary">
+		</form></center>
 	</form>
 
 <?php

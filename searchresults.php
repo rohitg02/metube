@@ -1,29 +1,64 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/buttons.css" rel="stylesheet">
+
+<?php
+session_cache_limiter('private,must-revalidate');
+$cache_limiter =session_cache_limiter();
+session_cache_expire(60);
+	session_start();
+	include_once "function.php";
+?>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Search Engine - Search</title>
-<!--<link href="search.css" type="text/css" rel="stylesheet" />-->
-
+	<title>Search Results</title>
 </head>
 
-<body>
-	<center>
-	<form action='searchresults.php' method='post'>
-		<input type='text' name='search' placeholder='Search' required /> 
-		<input type='submit' value='Search' />
-	</form>
-    </center>
-    <br/>
-    
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    <a href="browse.php"><img src="http://i.imgur.com/3Qyvyb7.png" alt="MeTube Icon" style="width:160;height:96"></a><span style="float:right;">
+    </div>
 
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li>
+	      <a href='logout.php' style="color:white" class="btn btn-primary raised round">Log Out</a>
+	    </li>
+      </ul>
+	<form name="form1" method="post" action="searchresults.php">
+	<input name="search" type="text" size="40" maxlength="50" placeholder= "title/metadata keywords/filename" required/>
+	<input type="submit" name="Submit" class="btn btn-primary" value="Search"/><br>
+	<div class="form-group">
+        </div>
+      </form>
+	  <div>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li>
+		<span>Welcome <?php echo $_SESSION['username'];?></span>
+	      </li>
+	    </ul>
+	  </div>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<body class="bg-info">
 
 <?php
 $output=NULL;
-	
+	if(isset($_POST['search'])){
 	include "dbconnect.php";
 	$output=NULL;
 	$download= NULL;
@@ -31,8 +66,8 @@ $output=NULL;
 	if(isset($_POST['search'])!=NULL){
 		$searchq = $_POST['search'];
 		$searchq = preg_replace("#[^0-9a-z]#i","",$searchq);
+		$query = mysql_query("SELECT * FROM media WHERE filename LIKE '%".$searchq."%' OR metadata LIKE '%".$searchq."%' OR title LIKE '%".$searchq."%';") or die("Could not find: ".mysql_error($con));
 		
-		$query = mysql_query("SELECT * FROM media WHERE filename LIKE '%".$searchq."%';") or die("Could not find: ".mysql_error($con));
 		//checking number of rows.
 		
 		$count = mysql_num_rows($query);
@@ -46,18 +81,54 @@ $output=NULL;
 				$mediaid =$row['mediaid'];
 				$path = $row['path'];
 				$output .="<a href=$link$mediaid> $filename</a><br>";
-				$download .="<a href= $path onclick=javascript:saveDownload($path)> Download</a><br>";
+			//	$download .="<a href= $path onclick=javascript:saveDownload($path)> Download</a><br>";
 			}
 		}
 	}
 	else
 	print($_POST['search']);
+}
+
+if(isset($_POST['categorysearch'])){
+	include "dbconnect.php";
+	$output=NULL;
+	if(isset($_POST['categorysearch'])){
+	$download= NULL;
+	$link="media.php?id=";
+	if(isset($_POST['categorysearch'])!=NULL){
+		$searchq =$_POST['search_category'];
+		$searchq = preg_replace("#[^0-9a-z]#i","",$searchq);
+		$query = mysql_query("SELECT media.filename, media.mediaid, media.path, categories.category FROM media INNER JOIN categories ON categories.mediaid=media.mediaid WHERE media.filename LIKE '%".$searchq."%' AND categories.category='$_POST[scroll_categories_search]' OR media.metadata LIKE '%".$searchq."%' AND categories.category='$_POST[scroll_categories_search]' OR media.title LIKE '%".$searchq."%' AND categories.category='$_POST[scroll_categories_search]';") or die("Could not find: ".mysql_error($con));
+		
+		//checking number of rows.
+		
+		$count = mysql_num_rows($query);
+		if($count == NULL){
+			$output = 'There were no search results';
+		}
+		
+		else{
+			while($row = mysql_fetch_array($query)){
+				$filename = $row['filename'];
+				$mediaid =$row['mediaid'];
+				$path = $row['path'];
+				$output .="<a href=$link$mediaid> $filename</a><br>";
+			//	$download .="<a href= $path onclick=javascript:saveDownload($path)> Download</a><br>";
+			}
+		}
+	}
+	else
+	print($_POST['search']);
+}
+}
+
+
 ?>
 
 <!-- Print search results-->
 <?php 
 Echo($output);
-Echo($download);
+//Echo($download);
 ?>
 	
 	

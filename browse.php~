@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="css/buttons.css" rel="stylesheet">
+
+<?php
+	session_start();
+	include_once "function.php";
+?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Browse</title>
+<link rel="stylesheet" type="text/css" href="css/default.css" />
+<script type="text/javascript" src="js/jquery-latest.pack.js"></script>
+<script type="text/javascript">
+function saveDownload(id){
+	$.post("media_download_process.php",
+	{
+       id: id,
+	},
+	function(message){ }
+ 	);
+} 
+</script>
+</head>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    <a href="browse.php"><img src="http://i.imgur.com/3Qyvyb7.png" alt="MeTube Icon" style="width:160;height:96"></a><span style="float:right;">
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li>
+	  <a href='logout.php' style="color:white" class="btn btn-primary raised round">Log Out</a>
+	</li>
+        <li class="dropdown">
+	  <a href='media_upload.php' style="color:white" class="btn btn-primary raised round">Upload File</a>
+        </li>
+        <li class="dropdown">
+	  <a href='media_upload.php' style="color:white" class="btn btn-primary raised round">Update</a>
+        </li>
+      </ul>
+	<form name="form1" method="post" action="searchresults.php">
+	<input name="search" type="text" size="40" maxlength="50" required/>
+	<input type="submit" name="Submit" class="btn btn-primary" value="Search"/><br>
+      </form>
+	  <div>
+	    <ul class="nav navbar-nav navbar-right">
+	      <li>
+		<span>Welcome <?php echo $_SESSION['username'];?></span>
+	      </li>
+	    </ul>
+	  </div>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+<body class="bg-info">
+	
+<div id='upload_result'>
+<?php 
+	if(isset($_REQUEST['result']) && $_REQUEST['result']!=0){		
+		echo upload_error($_REQUEST['result']);
+	}
+?>
+</div>
+<br/><br/>
+
+
+
+<?php
+
+	$query = "SELECT * from media"; 
+	$result = mysql_query( $query );
+	if (!$result){
+	   die ("Could not query the media table in the database: <br />". mysql_error());
+	}
+?>
+    <br><br><br><br>
+	<hr style="width: 100%; color: black; height: 1px; background-color:black;" />
+    <div style="background:#1766b5;color:#ffffff; width:132px;">Uploaded Media</div>
+	<table width="50%" cellpadding="0" cellspacing="0">
+		<?php
+            //filename, username, type, mediaid, path
+			while ($result_row = mysql_fetch_row($result)){ 
+				$mediaid = $result_row[3];
+				$filename = $result_row[0];
+				$filenpath = $result_row[4];
+		?>
+        	 <tr valign="top">			
+			<td>
+					<?php 
+						echo $mediaid;  //mediaid
+					?>
+			</td>
+			<td>
+			<?php $link="media.php?id="; ?>
+            	            <a href="media.php?id=<?php echo $mediaid;?>" target="_blank" ><?php echo $filename;?></a> 
+                        </td>
+                        <td>
+            	            <a href="<?php echo $filenpath;?>" target="_blank" onclick="javascript:saveDownload(<?php echo $result_row[4];?>);">Download</a>
+                        </td>
+		</tr>
+        	<?php
+			}
+		?>
+	</table>
+   </div>
+</body>
+</html>
