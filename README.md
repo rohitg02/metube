@@ -3,5 +3,5 @@
 	
 	You can create your own account by registering or you can use following information:
 	
-	*username:* tryit 
+  *username:* tryit 
   *password:* hello
